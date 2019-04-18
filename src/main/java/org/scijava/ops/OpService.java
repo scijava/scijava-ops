@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.scijava.InstantiableException;
-import org.scijava.log.LogService;
 import org.scijava.ops.core.Op;
 import org.scijava.ops.core.OpCollection;
 import org.scijava.ops.matcher.OpCandidate;

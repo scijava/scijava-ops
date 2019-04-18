@@ -3,9 +3,8 @@
  * SciJava Common shared library for SciJava software.
  * %%
  * Copyright (C) 2009 - 2017 Board of Regents of the University of
- * Wisconsin-Madison, Broad Institute of MIT and Harvard, Max Planck
- * Institute of Molecular Cell Biology and Genetics, University of
- * Konstanz, and KNIME GmbH.
+ * Wisconsin-Madison, Broad Institute of MIT and Harvard, and Max Planck
+ * Institute of Molecular Cell Biology and Genetics.
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,44 +29,68 @@
  * #L%
  */
 
-package org.scijava.util;
+package org.scijava.log;
 
 /**
- * Useful methods for platform-specific interrogation.
+ * Constants for specifying a logger's level of verbosity.
  * 
  * @author Curtis Rueden
- * @author Johannes Schindelin
  */
-public final class PlatformUtils {
+public final class LogLevel {
 
-	private PlatformUtils() {
+	private LogLevel() {
 		// prevent instantiation of utility class
 	}
 
-	/** Whether the operating system is Windows-based. */
-	public static boolean isWindows() {
-		return osName().startsWith("Win");
+	public static final int NONE = 0;
+	public static final int ERROR = 1;
+	public static final int WARN = 2;
+	public static final int INFO = 3;
+	public static final int DEBUG = 4;
+	public static final int TRACE = 5;
+
+	public static String prefix(final int level) {
+		switch (level) {
+			case ERROR:
+				return "ERROR";
+			case WARN:
+				return "WARNING";
+			case INFO:
+				return "INFO";
+			case DEBUG:
+				return "DEBUG";
+			case TRACE:
+				return "TRACE";
+			default:
+				return "LEVEL" + level;
+		}
 	}
 
-	/** Whether the operating system is Mac-based. */
-	public static boolean isMac() {
-		return osName().startsWith("Mac");
-	}
+	/**
+	 * Extracts the log level value from a string.
+	 * 
+	 * @return The log level, or -1 if the level cannot be parsed.
+	 */
+	public static int value(final String s) {
+		if (s == null) return -1;
 
-	/** Whether the operating system is Linux-based. */
-	public static boolean isLinux() {
-		return osName().startsWith("Linux");
-	}
+		// check whether it's a string label (e.g., "debug")
+		final String log = s.trim().toLowerCase();
+		if (log.startsWith("n")) return LogLevel.NONE;
+		if (log.startsWith("e")) return LogLevel.ERROR;
+		if (log.startsWith("w")) return LogLevel.WARN;
+		if (log.startsWith("i")) return LogLevel.INFO;
+		if (log.startsWith("d")) return LogLevel.DEBUG;
+		if (log.startsWith("t")) return LogLevel.TRACE;
 
-	/** Whether the operating system is POSIX friendly. */
-	public static boolean isPOSIX() {
-		return isMac() || isLinux();
-	}
-
-	/** Gets the name of the operating system. */
-	public static String osName() {
-		final String osName = System.getProperty("os.name");
-		return osName == null ? "Unknown" : osName;
+		// check whether it's a numerical value (e.g., 5)
+		try {
+			return Integer.parseInt(log);
+		}
+		catch (final NumberFormatException exc) {
+			// nope!
+		}
+		return -1;
 	}
 
 }

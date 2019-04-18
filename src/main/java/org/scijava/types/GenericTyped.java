@@ -1,11 +1,8 @@
 /*
  * #%L
- * SciJava Common shared library for SciJava software.
+ * SciJava Operations: a framework for reusable algorithms.
  * %%
- * Copyright (C) 2009 - 2017 Board of Regents of the University of
- * Wisconsin-Madison, Broad Institute of MIT and Harvard, Max Planck
- * Institute of Molecular Cell Biology and Genetics, University of
- * Konstanz, and KNIME GmbH.
+ * Copyright (C) 2016 - 2019 SciJava Ops developers.
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,44 +27,16 @@
  * #L%
  */
 
-package org.scijava.util;
+package org.scijava.types;
+
+import java.lang.reflect.Type;
 
 /**
- * Useful methods for platform-specific interrogation.
- * 
+ * An object which knows its generic type.
+ *
  * @author Curtis Rueden
- * @author Johannes Schindelin
  */
-public final class PlatformUtils {
+public interface GenericTyped {
 
-	private PlatformUtils() {
-		// prevent instantiation of utility class
-	}
-
-	/** Whether the operating system is Windows-based. */
-	public static boolean isWindows() {
-		return osName().startsWith("Win");
-	}
-
-	/** Whether the operating system is Mac-based. */
-	public static boolean isMac() {
-		return osName().startsWith("Mac");
-	}
-
-	/** Whether the operating system is Linux-based. */
-	public static boolean isLinux() {
-		return osName().startsWith("Linux");
-	}
-
-	/** Whether the operating system is POSIX friendly. */
-	public static boolean isPOSIX() {
-		return isMac() || isLinux();
-	}
-
-	/** Gets the name of the operating system. */
-	public static String osName() {
-		final String osName = System.getProperty("os.name");
-		return osName == null ? "Unknown" : osName;
-	}
-
+	Type getType();
 }

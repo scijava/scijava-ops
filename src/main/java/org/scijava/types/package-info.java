@@ -1,11 +1,8 @@
 /*
  * #%L
- * SciJava Common shared library for SciJava software.
+ * SciJava Operations: a framework for reusable algorithms.
  * %%
- * Copyright (C) 2009 - 2017 Board of Regents of the University of
- * Wisconsin-Madison, Broad Institute of MIT and Harvard, Max Planck
- * Institute of Molecular Cell Biology and Genetics, University of
- * Konstanz, and KNIME GmbH.
+ * Copyright (C) 2016 - 2019 SciJava Ops developers.
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,35 +27,26 @@
  * #L%
  */
 
-package org.scijava.core;
-
 /**
- * An interface defining basic characteristics including name, label,
- * description, and a table of key/value pairs.
- * 
- * @author Curtis Rueden
+ * This package provides extended support for reasoning about generic types at
+ * runtime, beyond what is offered by SciJava Common's
+ * {@link org.scijava.util.Types} class. This package offers the following
+ * additional features:
+ * <ul>
+ * <li>Reason about whether a collection of arguments (object instances, generic
+ * types, or a mixture thereof) satisfy a given list of generic types, such as
+ * those of a particular method signature. See
+ * {@link org.scijava.types.TypeTools#satisfies} for details.</li>
+ * <li>Create {@link org.scijava.types.Nil} objects, which act as "typed
+ * null" placeholders, and support generation of proxy instances of their
+ * associated generic type, similar to (but less featureful than) how mocking
+ * frameworks create mock objects.</li>
+ * <li>Recover erased generic type information from object instances at runtime,
+ * in an extensible way, via {@link org.scijava.types.TypeExtractor} plugins
+ * and the {@link TypeService#reify} method. E.g., you can learn that an object
+ * of class {@link java.util.HashMap} is actually (or at least functionally) a
+ * {@code HashMap<String, Integer>}.</li>
+ * </ul>
  */
-public interface BasicDetails extends Named {
 
-	/** Gets the name to appear in a UI, if applicable. */
-	String getLabel();
-
-	/** Gets a string describing the object. */
-	String getDescription();
-
-	/** Returns true iff the given key is defined. */
-	public boolean is(String key);
-
-	/** Gets the value of the given key, or null if undefined. */
-	public String get(String key);
-
-	/** Sets the name to appear in a UI, if applicable. */
-	void setLabel(String label);
-
-	/** Sets a string describing the object. */
-	void setDescription(String description);
-
-	/** Sets the value of the given key. */
-	public void set(final String key, final String value);
-
-}
+package org.scijava.types;

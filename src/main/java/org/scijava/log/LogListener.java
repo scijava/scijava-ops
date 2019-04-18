@@ -3,19 +3,18 @@
  * SciJava Common shared library for SciJava software.
  * %%
  * Copyright (C) 2009 - 2017 Board of Regents of the University of
- * Wisconsin-Madison, Broad Institute of MIT and Harvard, Max Planck
- * Institute of Molecular Cell Biology and Genetics, University of
- * Konstanz, and KNIME GmbH.
+ * Wisconsin-Madison, Broad Institute of MIT and Harvard, and Max Planck
+ * Institute of Molecular Cell Biology and Genetics.
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -30,44 +29,21 @@
  * #L%
  */
 
-package org.scijava.util;
+package org.scijava.log;
 
 /**
- * Useful methods for platform-specific interrogation.
- * 
- * @author Curtis Rueden
- * @author Johannes Schindelin
+ * Callback function used by {@link Logger}.
+ *
+ * @author Matthias Arzt
+ * @see Logger
+ * @see LogMessage
  */
-public final class PlatformUtils {
+public interface LogListener {
 
-	private PlatformUtils() {
-		// prevent instantiation of utility class
-	}
-
-	/** Whether the operating system is Windows-based. */
-	public static boolean isWindows() {
-		return osName().startsWith("Win");
-	}
-
-	/** Whether the operating system is Mac-based. */
-	public static boolean isMac() {
-		return osName().startsWith("Mac");
-	}
-
-	/** Whether the operating system is Linux-based. */
-	public static boolean isLinux() {
-		return osName().startsWith("Linux");
-	}
-
-	/** Whether the operating system is POSIX friendly. */
-	public static boolean isPOSIX() {
-		return isMac() || isLinux();
-	}
-
-	/** Gets the name of the operating system. */
-	public static String osName() {
-		final String osName = System.getProperty("os.name");
-		return osName == null ? "Unknown" : osName;
-	}
+	/**
+	 * This method is normally called from many threads in parallel. It must be
+	 * implemented highly thread safe and must not use any kind of locks.
+	 */
+	void messageLogged(LogMessage message);
 
 }

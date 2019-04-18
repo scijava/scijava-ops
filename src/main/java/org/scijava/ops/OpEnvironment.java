@@ -29,7 +29,7 @@
 
 package org.scijava.ops;
 
-import org.scijava.log.LogService;
+import org.scijava.log.Logger;
 import org.scijava.ops.matcher.OpInfo;
 import org.scijava.ops.matcher.OpRef;
 
@@ -68,5 +68,5 @@ public interface OpEnvironment {
 	
 	Iterable<OpInfo> infos(String name);
 	
-	LogService logger();
+	Logger logger();
 }

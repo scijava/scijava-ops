@@ -30,93 +30,30 @@
  * #L%
  */
 
-package org.scijava.core;
+package org.scijava.param;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.scijava.util.StringMaker;
+import java.util.List;
 
 /**
- * Abstract superclass of {@link BasicDetails} implementations.
+ * An object whose validity can be confirmed after initialization. If the object
+ * is deemed invalid, a list of reasons for invalidity can be requested.
  * 
  * @author Curtis Rueden
  */
-public abstract class AbstractBasicDetails implements BasicDetails {
+public interface Validated {
 
-	/** Unique name of the object. */
-	private String name;
+	/**
+	 * Gets whether the object is completely valid (i.e., no problems during
+	 * initialization).
+	 */
+	boolean isValid();
 
-	/** Human-readable label for describing the object. */
-	private String label;
-
-	/** String describing the object in detail. */
-	private String description;
-
-	/** Table of extra key/value pairs. */
-	private final Map<String, String> values = new HashMap<>();
-
-	// -- Object methods --
-
-	@Override
-	public String toString() {
-		final StringMaker sm = new StringMaker();
-		sm.append("name", name);
-		sm.append("label", label);
-		sm.append("description", description);
-		for (final String key : values.keySet()) {
-			sm.append(key, values.get(key));
-		}
-		return sm.toString();
-	}
-
-	// -- BasicDetails methods --
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public String getDescription() {
-		return description;
-	}
-
-	@Override
-	public boolean is(final String key) {
-		return values.containsKey(key);
-	}
-
-	@Override
-	public String get(final String key) {
-		return values.get(key);
-	}
-
-	@Override
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-
-	@Override
-	public void setDescription(final String description) {
-		this.description = description;
-	}
-
-	@Override
-	public void set(final String key, final String value) {
-		values.put(key, value);
-	}
-
-	// -- Named methods --
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(final String name) {
-		this.name = name;
-	}
+	/**
+	 * Gets the list of problems encountered while initializing the object.
+	 * 
+	 * @return The list of problems, or a zero-length list in the case of
+	 *         {@link #isValid()} returning true.
+	 */
+	List<ValidityProblem> getProblems();
 
 }
