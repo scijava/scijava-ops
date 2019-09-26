@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -58,13 +60,21 @@
 		<contributor>
 			<name>Christian Dietz</name>
 			<url>https://imagej.net/User:Dietzc</url>
-			<roles><role>founder</role></roles>
-			<properties><id>dietzc</id></properties>
+			<roles>
+				<role>founder</role>
+			</roles>
+			<properties>
+				<id>dietzc</id>
+			</properties>
 		</contributor>
 		<contributor>
 			<name>David Kolb</name>
-			<roles><role>founder</role></roles>
-			<properties><id>Treiblesschorle</id></properties>
+			<roles>
+				<role>founder</role>
+			</roles>
+			<properties>
+				<id>Treiblesschorle</id>
+			</properties>
 		</contributor>
 	</contributors>
 
@@ -123,11 +133,25 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.leangen.geantyref</groupId>
 			<artifactId>geantyref</artifactId>
 			<version>1.3.6</version>
+		</dependency>
+
+		<!-- Annotation processor -->
+		<dependency>
+			<groupId>com.github.therapi</groupId>
+			<artifactId>therapi-runtime-javadoc-scribe</artifactId>
+			<version>0.9.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.therapi</groupId>
+			<artifactId>therapi-runtime-javadoc</artifactId>
+			<version>0.9.0</version>
 		</dependency>
 
 		<!-- Test scope dependencies -->
